@@ -29,8 +29,8 @@ function save_images(config, images_list)
             imwrite(zoomed_img, zoomed_img_path);
             fprintf('save image:%s\n', zoomed_img_path);
             % -------------------------------- marked image
-            img(row_s:row_e, [col_s, col_e], :) = repmat(color_value, num_row, 2, 1);
-            img([row_s,row_e], col_s:col_e, :) = repmat(color_value, 2, num_col, 1);
+            img(row_s:row_e, [col_s, col_e], :) = repmat(color_value, row_e-row_s+1, 2, 1);
+            img([row_s,row_e], col_s:col_e, :) = repmat(color_value, 2, col_e-col_s+1, 1);
             marked_img_path = fullfile(config.zoomed_image_save_dir, sprintf('./%s_marked.png', img_name));
             imwrite(img, marked_img_path);
             fprintf('save image:%s\n', marked_img_path);
