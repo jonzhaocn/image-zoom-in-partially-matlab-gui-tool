@@ -1,6 +1,6 @@
-function init_rect_position(x, y)
+function init_rect_position(row, col)
     % init rectangle position top left point
     global info; 
-    info.rect_position_start_point(1) = x;
-    info.rect_position_start_point(2) = y;
+    info.rect_position_start_point(1) = row;
+    info.rect_position_start_point(2) = col;
 end

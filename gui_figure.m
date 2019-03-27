@@ -32,36 +32,63 @@ function gui_figure(config, images_list)
 end
 
 function button_down_fun(src, event, handles, config)
-    point = get(gca,'CurrentPoint');
+    point = get(gca, 'CurrentPoint');
+    col = point(1, 1);
+    row = point(1, 2);
+    if col < 1 || col > size(config.image, 2)
+        return
+    end
+    if row < 1 || row > size(config.image, 1)
+        return
+    end
+    
     set(handles.operation_figure_handle,'WindowButtonMotionFcn',{@button_motion_fun, handles, config});
     switch (get(gcbf, 'SelectionType'))
         % left mouse button
         case 'normal'
-            init_rect_position(point(1,1), point(1,2));
+            init_rect_position(row, col);
         % right mouse button or ctrl + left mouse button
         case 'alt'
-            init_rect_move(point(1,1), point(1,2));
+            init_rect_move(row, col);
     end 
 end
 
 function button_up_fun(src, event, handles, config)
     point = get(gca,'CurrentPoint');
+    col = point(1, 1);
+    row = point(1, 2);
+    if col < 1 || col > size(config.image, 2)
+        return
+    end
+    if row < 1 || row > size(config.image, 1)
+        return
+    end
+    
     set(handles.operation_figure_handle, 'WindowButtonMotionFcn', '');
     switch (get(gcbf, 'SelectionType'))
         % left mouse button
         case 'normal'
-            update_rect(point(1,1), point(1,2), handles, config);
+            update_rect(row, col, handles, config);
     end 
 end
 
 function button_motion_fun(src, event, handles, config)
     point = get(gca,'CurrentPoint');
+    col = point(1, 1);
+    row = point(1, 2);
+    if col < 1 || col > size(config.image, 2)
+        return
+    end
+    if row < 1 || row > size(config.image, 1)
+        return
+    end
+    
     switch (get(gcbf, 'SelectionType'))
         % left mouse button
         case 'normal'
-            update_rect(point(1,1), point(1,2), handles, config);
+            update_rect(row, col, handles, config);
         % right mouse button or ctrl + left mouse button
         case 'alt'
-            move_rect(point(1,1), point(1,2), handles, config);
+            move_rect(row, col, handles, config);
     end 
 end
