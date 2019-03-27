@@ -2,9 +2,19 @@
 % https://blog.csdn.net/renjinr/article/details/14002143
 % https://blog.csdn.net/SMF0504/article/details/51883417
 
-function gui_main(handles, config)
+function gui_main(handles, config, images_list)
     set(handles.operation_figure_handle,'WindowButtonDownFcn',{@button_down_fun, handles, config});
     set(handles.operation_figure_handle,'WindowButtonUpFcn',{@button_up_fun, handles, config});
+    pause(1);
+    while 1
+        pause(0.5)
+        input_char = get(gcf, 'CurrentCharacter');
+        set(gcf, 'CurrentCharacter', ' ');
+        if strcmp(input_char, 's')
+            save_images(config, images_list);
+            break;
+        end
+    end
 end
 
 function button_down_fun(src, event, handles, config)
