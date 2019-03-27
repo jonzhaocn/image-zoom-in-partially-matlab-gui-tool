@@ -1,4 +1,4 @@
-function update_rect(x, y, figure_handle, config)
+function update_rect(x, y, handles, config)
     global info; 
     if x < info.rect_position_start_point(1)
         start_x = x;
@@ -25,9 +25,9 @@ function update_rect(x, y, figure_handle, config)
     else
         error('rect_mode shoule be square or rectangular')
     end
-    
     info.rect_position = [start_x, start_y, width, height];
     delete(findobj(gca, 'tag', config.rect_tag));
-    rectangle('position', info.rect_position, 'edgecolor', config.edgecolor, 'tag', config.rect_tag)
-    refreshdata(figure_handle)
+    rectangle(handles.rect_plot_handle, 'position', info.rect_position, 'edgecolor', config.edgecolor, 'tag', config.rect_tag);
+    refreshdata(handles.operation_figure_handle);
+    show_image_detail(handles, config);
 end
