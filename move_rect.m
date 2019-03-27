@@ -11,5 +11,5 @@ function move_rect(x, y, handles, config)
     info.rect_position(2) = info.rect_position(2) + y_move;
     rectangle(handles.rect_plot_handle, 'position', info.rect_position, 'edgecolor', config.edgecolor, 'tag', config.rect_tag);
     refreshdata(handles.operation_figure_handle);
-    show_image_detail(handles, config);
+    show_zoomed_image(handles, config);
 end
