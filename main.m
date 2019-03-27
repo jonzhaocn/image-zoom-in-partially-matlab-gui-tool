@@ -17,15 +17,20 @@
 % zoomed_image_save_dir
 clc;
 clear;
-images_list = {'./data/orig.jpg', './data/pred.jpg'};
+images_list = {'./data/orig.jpg'};
+images = cell(numel(images_list), 1);
 
-image = imread(images_list{1});
-if size(image, 3) == 1
-    image = repmat(image, 1, 1, 3);
+for i = 1:numel(images_list)
+    img = imread(images_list{i});
+    if size(img, 3) == 1
+        img = repmat(img, 1, 1, 3);
+    end
+    images{i} = img;
 end
+images = cat(4, images{:});
 
 config = struct('edgecolor', 'r', 'rect_tag', 'rect',...
-    'rect_mode', 'square', 'image', image, 'zoomed_image_size', [256, 256], ...
+    'rect_mode', 'square', 'images', images, 'zoomed_image_size', [256, 256], ...
     'imresize_method', 'nearest', 'zoomed_image_save_dir', './data');
 
 gui_figure(config, images_list);

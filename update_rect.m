@@ -30,5 +30,4 @@ function update_rect(row, col, handles, config)
     delete(findobj(gca, 'tag', config.rect_tag));
     rectangle(handles.rect_plot_handle, 'position', info.rect_position, 'edgecolor', config.edgecolor, 'tag', config.rect_tag);
     refreshdata(handles.operation_figure_handle);
-    show_zoomed_image(handles, config);
 end
