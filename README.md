@@ -16,7 +16,8 @@
 * `imresize_method: like nearest`
 * `zoomed_image_save_dir`
 
-## Examples
+## Example
+* `example images(original image) is downloaded from http://mridata.org/, it's in Stanford Fullysampled 3D FSE Knees project`
 
 <p align="center">
 	<img src="/data/orig_marked.png" height="256px" width="256px">
