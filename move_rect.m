@@ -1,4 +1,5 @@
 function move_rect(x, y, handles, config)
+    % move zoom in area according mouse position
     global info;
     x_move = x - info.rect_move_start_point(1);
     y_move = y - info.rect_move_start_point(2);

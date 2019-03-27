@@ -1,4 +1,5 @@
 function show_zoomed_image(handles, config)
+    % show zoomed image in the second figure
     global info;
     position = info.rect_position;
     image = config.image;

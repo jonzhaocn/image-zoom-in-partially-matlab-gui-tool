@@ -1,4 +1,5 @@
 function update_rect(x, y, handles, config)
+    % update zoom in area size
     global info; 
     if x < info.rect_position_start_point(1)
         start_x = x;
