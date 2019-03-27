@@ -15,4 +15,16 @@
 * `zoomed_image_size`
 * `imresize_method: like nearest`
 * `zoomed_image_save_dir`
+
 ## Examples
+
+<p align="center">
+	<img src="/data/orig_marked.png" height="256px" width="256px">
+	<img src="/data/pred_marked.png" height="256px" width="256px">
+</p>
+
+<p align="center">
+	<img src="/data/orig_zoomed.png" height="256px" width="256px">
+	<img src="/data/pred_zoomed.png" height="256px" width="256px">
+</p>
+
