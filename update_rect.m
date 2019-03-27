@@ -1,22 +1,33 @@
-function update_rect(x, y)
-    global rect_position; 
-    if x < rect_position(1)
+function update_rect(x, y, figure_handle, config)
+    global info; 
+    if x < info.rect_position_start_point(1)
         start_x = x;
-        width = rect_position(1) - x;
+        width = info.rect_position_start_point(1) - x;
     else
-        start_x = rect_position(1);
-        width = x - rect_position(1);
+        start_x = info.rect_position_start_point(1);
+        width = x - info.rect_position_start_point(1);
     end
     
-    if y < rect_position(2)
+    if y < info.rect_position_start_point(2)
         start_y = y;
-        height = rect_position(2) - y;
+        height = info.rect_position_start_point(2) - y;
     else
-        start_y = rect_position(2);
-        height = y - rect_position(2);
+        start_y = info.rect_position_start_point(2);
+        height = y - info.rect_position_start_point(2);
     end
-    rect_position = [start_x, start_y, width, height];
-    delete( findobj(gca, 'tag', 'rect') );
-    rectangle('position', rect_position, 'edgecolor', 'r', 'tag', 'rect')
-    refreshdata
+    
+    if config.rect_mode == 'square'
+        min_val = min([width, height]);
+        width = min_val;
+        height = min_val;
+    elseif config.rect_mode == 'rectangular'
+        
+    else
+        error('rect_mode shoule be square or rectangular')
+    end
+    
+    info.rect_position = [start_x, start_y, width, height];
+    delete(findobj(gca, 'tag', config.rect_tag));
+    rectangle('position', info.rect_position, 'edgecolor', config.edgecolor, 'tag', config.rect_tag)
+    refreshdata(figure_handle)
 end

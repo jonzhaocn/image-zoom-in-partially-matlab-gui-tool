@@ -1,5 +1,5 @@
 function init_rect_position(x, y)
-    global rect_position; 
-    rect_position(1) = x;
-    rect_position(2) = y;
+    global info; 
+    info.rect_position_start_point(1) = x;
+    info.rect_position_start_point(2) = y;
 end
