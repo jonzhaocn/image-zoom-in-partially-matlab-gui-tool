@@ -17,7 +17,7 @@
 % zoomed_image_save_dir
 clc;
 clear;
-images_list = {'./data/orig.jpg'};
+images_list = {'./data/orig.jpg', './data/pred.jpg'};
 images = cell(numel(images_list), 1);
 
 for i = 1:numel(images_list)
