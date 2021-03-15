@@ -2,47 +2,50 @@
 % https://blog.csdn.net/renjinr/article/details/14002143
 % https://blog.csdn.net/SMF0504/article/details/51883417
 
-function gui_figure(config, images_list)
+function gui_figure(config, img_list)
     global info;
     info = struct('rect_position', [1,1,1,1], 'rect_position_start_point', [1,1], 'rect_move_start_point', [1,1]);
     num_images = size(config.images, 4);
     
-    % operation figure
-    operation_figure_handle = figure(1);
-    rect_plot_handle = subplot(1,1,1);
+    % 在figure 1中展示第一幅图像，在figure 1上绘制矩形，该矩形会同时作用于其他图像
+    mainfig_handle = figure(1);
+    rectplot_handle = subplot(1,1,1);
     imshow(config.images(:,:,:,1), []);
     
-    % zoom in figure
+    % 在figure 2中展示所有图像
     figure(2);
-    zoomed_image_handles = cell(num_images, 1);
+    res_handles = cell(num_images, 1);
     for i = 1:num_images
         subplot(1, num_images, i);
-        [~, image_name, ~] = fileparts(images_list{i});
-        resized_image = imresize(config.images(:, :, :, i), config.zoomed_image_size, config.imresize_method);
-        zi_handle = imshow(resized_image, []);
+        [~, image_name, ~] = fileparts(img_list{i});
+        subfig_handle = imshow(config.images(:, :, :, i), []);
         title(image_name);
-        zoomed_image_handles{i} = zi_handle;
+        res_handles{i} = subfig_handle;
     end
     
     hold on;
-    % set button function
-    handles = struct('operation_figure_handle', operation_figure_handle, 'rect_plot_handle', rect_plot_handle);
-    set(handles.operation_figure_handle,'WindowButtonDownFcn',{@button_down_fun, handles, zoomed_image_handles, config});
-    set(handles.operation_figure_handle,'WindowButtonUpFcn',{@button_up_fun, handles, zoomed_image_handles, config});
+    % 将mainfig_handle与rectplot_handle保存在结构体handle_struct中
+    handle_struct = struct('mainfig_handle', mainfig_handle, 'rectplot_handle', rectplot_handle);
+    % 为mainfig_handle绑定鼠标点击、鼠标松开事件
+    set(mainfig_handle,'WindowButtonDownFcn',{@button_down_fun, handle_struct, res_handles, config});
+    set(mainfig_handle,'WindowButtonUpFcn',{@button_up_fun, handle_struct, res_handles, config});
     
-    % get keyboard input, press s to save image
+    % 监听键盘，是否点击了`s`键，如果点击了s键，则保存当前结果
     while 1
         pause(0.5)
         input_char = get(gcf, 'CurrentCharacter');
         set(gcf, 'CurrentCharacter', ' ');
         if strcmp(input_char, 's')
-            save_images(config, images_list);
+            save_images(config, img_list);
             break;
         end
     end
 end
 
-function button_down_fun(src, event, handles, zoomed_image_handles, config)
+function button_down_fun(src, event, handle_struct, res_handles, config)
+% 鼠标按下事件
+
+    % 获取鼠标点击的位置
     point = get(gca, 'CurrentPoint');
     col = point(1, 1);
     row = point(1, 2);
@@ -53,7 +56,10 @@ function button_down_fun(src, event, handles, zoomed_image_handles, config)
         return
     end
     
-    set(handles.operation_figure_handle,'WindowButtonMotionFcn',{@button_motion_fun, handles, zoomed_image_handles, config});
+    % 绑定鼠标移动事件
+    set(handle_struct.mainfig_handle,'WindowButtonMotionFcn',{@button_motion_fun, handle_struct, res_handles, config});
+    
+    % 如果点击的是左键，则初始化矩形的位置，如果点击的是右键，为矩形移动作初始化
     switch (get(gcbf, 'SelectionType'))
         % left mouse button
         case 'normal'
@@ -64,7 +70,10 @@ function button_down_fun(src, event, handles, zoomed_image_handles, config)
     end 
 end
 
-function button_up_fun(src, event, handles, zoomed_image_handles, config)
+function button_up_fun(src, event, handle_struct, res_handles, config)
+% 鼠标松开事件
+
+    % 获取鼠标最终的位置
     point = get(gca,'CurrentPoint');
     col = point(1, 1);
     row = point(1, 2);
@@ -75,16 +84,18 @@ function button_up_fun(src, event, handles, zoomed_image_handles, config)
         return
     end
     
-    set(handles.operation_figure_handle, 'WindowButtonMotionFcn', '');
+    set(handle_struct.mainfig_handle, 'WindowButtonMotionFcn', '');
+    % 如果点击的是左键，则可以根据鼠标点击位置与松开位置绘制矩形
     switch (get(gcbf, 'SelectionType'))
         % left mouse button
         case 'normal'
-            update_rect(row, col, handles, config);
-            show_zoomed_image(zoomed_image_handles, config);
+            update_rect(row, col, handle_struct, config);
+            show_images(res_handles, config);
     end 
 end
 
-function button_motion_fun(src, event, handles, zoomed_image_handles, config)
+function button_motion_fun(src, event, handle_struct, res_handles, config)
+% 鼠标移动事件
     point = get(gca,'CurrentPoint');
     col = point(1, 1);
     row = point(1, 2);
@@ -96,13 +107,14 @@ function button_motion_fun(src, event, handles, zoomed_image_handles, config)
     end
     
     switch (get(gcbf, 'SelectionType'))
-        % left mouse button
+        % 如果移动的是左键，则根据鼠标位置更新矩形
         case 'normal'
-            update_rect(row, col, handles, config);
-            show_zoomed_image(zoomed_image_handles, config);
+            update_rect(row, col, handle_struct, config);
+            show_images(res_handles, config);
         % right mouse button or ctrl + left mouse button
+        % 如果是右键，则移动矩形位置
         case 'alt'
-            move_rect(row, col, handles, config);
-            show_zoomed_image(zoomed_image_handles, config);
+            move_rect(row, col, handle_struct, config);
+            show_images(res_handles, config);
     end 
 end

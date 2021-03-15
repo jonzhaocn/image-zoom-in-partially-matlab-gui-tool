@@ -1,5 +1,6 @@
 function move_rect(row, col, handles, config)
-    % move zoom in area according mouse position
+% 移动矩形
+
     global info;
     row_move = row - info.rect_move_start_point(1);
     col_move = col - info.rect_move_start_point(2);
@@ -28,6 +29,6 @@ function move_rect(row, col, handles, config)
     
     info.rect_position(1) = info.rect_position(1) + col_move;
     info.rect_position(2) = info.rect_position(2) + row_move;
-    rectangle(handles.rect_plot_handle, 'position', info.rect_position, 'edgecolor', config.edgecolor, 'tag', config.rect_tag);
-    refreshdata(handles.operation_figure_handle);
+    rectangle(handles.rectplot_handle, 'position', info.rect_position, 'edgecolor', config.edgecolor, 'tag', config.rect_tag);
+    refreshdata(handles.mainfig_handle);
 end
