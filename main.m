@@ -32,7 +32,7 @@ for i = 1:numel(images_list)
 end
 images = cat(4, images{:});
 
-config = struct('edgecolor', 'r', 'rect_mode', 'keep', ...
+config = struct('edgecolor', 'r', 'rect_mode', 'keep', 'line_width', 2, ...
     'images', images, 'res_dir', './data', 'rect_tag', 'rect');
 
 gui_figure(config, images_list);

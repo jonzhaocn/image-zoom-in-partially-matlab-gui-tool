@@ -29,8 +29,14 @@ function save_images(config, images_list)
             imwrite(croped_img, croped_img_path);
             fprintf('save image:%s\n', croped_img_path);
             % -------------------------------- marked image
-            img(row_s:row_e, [col_s, col_e], :) = repmat(color_value, row_e-row_s+1, 2, 1);
-            img([row_s,row_e], col_s:col_e, :) = repmat(color_value, 2, col_e-col_s+1, 1);
+            hwidth = floor(config.line_width/2);
+            if mod(config.line_width, 2)==1
+                img(row_s:row_e, [col_s-hwidth:col_s+hwidth, col_e-hwidth:col_e+hwidth], :) = repmat(color_value, row_e-row_s+1, config.line_width*2, 1);
+                img([row_s-hwidth:row_s+hwidth, row_e-hwidth:row_e+hwidth], col_s:col_e, :) = repmat(color_value, config.line_width*2, col_e-col_s+1, 1); 
+            else
+                img(row_s:row_e, [col_s-hwidth+1:col_s+hwidth, col_e-hwidth:col_e+hwidth-1], :) = repmat(color_value, row_e-row_s+1, config.line_width*2, 1);
+                img([row_s-hwidth+1:row_s+hwidth, row_e-hwidth:row_e+hwidth-1], col_s:col_e, :) = repmat(color_value, config.line_width*2, col_e-col_s+1, 1);
+            end
             marked_img_path = fullfile(config.res_dir, sprintf('./%s_marked.png', img_name));
             imwrite(img, marked_img_path);
             fprintf('save image:%s\n', marked_img_path);
