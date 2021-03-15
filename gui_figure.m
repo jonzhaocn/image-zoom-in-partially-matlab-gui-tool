@@ -38,6 +38,8 @@ function gui_figure(config, img_list)
         if strcmp(input_char, 's')
             save_images(config, img_list);
             break;
+        elseif strcmp(input_char, 'q')
+            return
         end
     end
 end
