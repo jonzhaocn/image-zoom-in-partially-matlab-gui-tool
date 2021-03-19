@@ -24,10 +24,15 @@ function save_images(config, images_list)
         
         croped_img = img(row_s:row_e, col_s:col_e, :);
         if numel(croped_img) > 0
-            % ------------------------------- zoomed image
+            
+            % ------------------------------- croped image
             croped_img_path = fullfile(config.res_dir, sprintf('./%s_croped.jpg', img_name));
+            if config.resize_times ~= 1
+                croped_img = imresize(croped_img, config.resize_times, config.resize_method);
+            end
             imwrite(croped_img, croped_img_path);
             fprintf('save image:%s\n', croped_img_path);
+            
             % -------------------------------- marked image
             hwidth = floor(config.line_width/2);
             if mod(config.line_width, 2)==1
