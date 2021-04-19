@@ -11,7 +11,9 @@ function show_images(res_handles, config)
         round(col):round(col+num_col-1), :, i);
     
         if numel(curr_img) > 0
-            set(res_handles{i} ,'CData', curr_img);
+            res_handles{i}.img.CData = curr_img;
+            res_handles{i}.plot.XLim = [0.5, 0.5+size(curr_img, 2)];
+            res_handles{i}.plot.YLim = [0.5, 0.5+size(curr_img, 1)];
         else
             break;
         end

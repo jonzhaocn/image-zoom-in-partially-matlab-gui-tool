@@ -14,13 +14,22 @@ function gui_figure(config, img_list)
     
     % 在figure 2中展示所有图像
     figure(2);
+    subfig_row = floor(sqrt(num_images));
+    subfig_col = ceil(num_images/subfig_row);
+    
     res_handles = cell(num_images, 1);
+    
     for i = 1:num_images
-        subplot(1, num_images, i);
+        plot_handle = subplot(subfig_row, subfig_col, i);
+        
         [~, image_name, ~] = fileparts(img_list{i});
-        subfig_handle = imshow(config.images(:, :, :, i), []);
+        image_name = replace(image_name, '_', '-');
+        
+        imshow_handle = imshow(config.images(:, :, :, i), []);
         title(image_name);
-        res_handles{i} = subfig_handle;
+        
+        res_handles{i}.img = imshow_handle;
+        res_handles{i}.plot = plot_handle;
     end
     
     hold on;
