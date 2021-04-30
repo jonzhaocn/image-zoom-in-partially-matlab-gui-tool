@@ -29,7 +29,7 @@ function move_rect(row, col, main_handle, config)
     
     info.rect_position(1) = info.rect_position(1) + col_move;
     info.rect_position(2) = info.rect_position(2) + row_move;
-    rectangle(main_handle.plot, 'position', info.rect_position, 'edgecolor', ...
-        config.edgecolor, 'tag', config.rect_tag, 'linewidth', config.line_width);
+    rectangle(main_handle.plot, 'position', info.rect_position, 'edgecolor', config.edge_color, ...
+        'linestyle', config.line_style, 'tag', config.rect_tag, 'linewidth', config.line_width);
     refreshdata(main_handle.fig);
 end

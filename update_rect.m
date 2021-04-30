@@ -42,7 +42,7 @@ function update_rect(row, col, main_handle, config)
     % 删除原先绘制的矩形
     delete(findobj(gca, 'tag', config.rect_tag));
     % 绘制新的矩形
-    rectangle(main_handle.plot, 'position', info.rect_position, 'edgecolor', ...
-        config.edgecolor, 'tag', config.rect_tag, 'linewidth', config.line_width);
+    rectangle(main_handle.plot, 'position', info.rect_position, 'edgecolor', config.edge_color, ...
+        'linestyle', config.line_style, 'tag', config.rect_tag, 'linewidth', config.line_width);
     refreshdata(main_handle.fig);
 end

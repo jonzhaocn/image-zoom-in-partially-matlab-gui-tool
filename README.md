@@ -20,12 +20,14 @@
 * `example images(original image) is downloaded from http://mridata.org/, it's in Stanford Fullysampled 3D FSE Knees project`
 
 <p align="center">
-	<img src="/data/orig_marked.png" height="256px" width="256px">
-	<img src="/data/pred_marked.png" height="256px" width="256px">
+	<img src="/res/orig_marked.jpg" height="256px" width="256px">
+	<img src="/res/pred_marked.jpg" height="256px" width="256px">
 </p>
 
+
+
 <p align="center">
-	<img src="/data/orig_zoomed.png" height="256px" width="256px">
-	<img src="/data/pred_zoomed.png" height="256px" width="256px">
+	<img src="/res/orig_croped.jpg" height="256px" width="256px">
+	<img src="/res/pred_croped.jpg" height="256px" width="256px">
 </p>
 
