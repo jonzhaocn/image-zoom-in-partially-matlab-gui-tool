@@ -43,13 +43,8 @@ function save_images(config, images_list)
 %                 img(row_s:row_e, [col_s-hwidth+1:col_s+hwidth, col_e-hwidth:col_e+hwidth-1], :) = repmat(color_value, row_e-row_s+1, config.line_width*2, 1);
 %                 img([row_s-hwidth+1:row_s+hwidth, row_e-hwidth:row_e+hwidth-1], col_s:col_e, :) = repmat(color_value, config.line_width*2, col_e-col_s+1, 1);
 %             end
-            figure(3);
-            tmp_h = subplot(1,1,1);
-            imshow(img_path);
-            rectangle('position', info.rect_position, 'edgecolor', config.edge_color, ...
-                'linestyle', config.line_style, 'linewidth', config.line_width);
-            marked_img = getframe(tmp_h);
-            marked_img = marked_img.cdata;
+            marked_img = insertShape(img, 'Rectangle', info.rect_position, ...
+                'LineWidth', config.line_width, 'Color', config.edge_color);
             marked_img_path = fullfile(config.res_dir, sprintf('./%s_marked.jpg', img_name));
             imwrite(marked_img, marked_img_path);
             fprintf('save image:%s\n', marked_img_path);
@@ -57,5 +52,4 @@ function save_images(config, images_list)
             break;
         end
     end
-    close(3)
 end

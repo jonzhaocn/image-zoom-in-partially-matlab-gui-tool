@@ -43,6 +43,6 @@ function update_rect(row, col, main_handle, config)
     delete(findobj(gca, 'tag', config.rect_tag));
     % 绘制新的矩形
     rectangle(main_handle.plot, 'position', info.rect_position, 'edgecolor', config.edge_color, ...
-        'linestyle', config.line_style, 'tag', config.rect_tag, 'linewidth', config.line_width);
+        'tag', config.rect_tag, 'linewidth', config.line_width);
     refreshdata(main_handle.fig);
 end

@@ -21,7 +21,6 @@
 % res_dir：结果文件夹
 % resize_times: 将裁剪后的图像进行缩放的倍数，不想要进行缩放，可以设置为1
 % resize_method: 缩放的方法，nearest, bilinear, bicubic
-% line_style: -、--、:、-.
 
 clc;
 clear;
@@ -37,8 +36,8 @@ for i = 1:numel(images_list)
 end
 images = cat(4, images{:});
 
-config = struct('edge_color', 'y', 'rect_mode', 'keep', 'line_width', 1, 'line_style', '-', ...
-    'images', images, 'res_dir', './res', 'rect_tag', 'mytag', 'resize_times', 1, ...
+config = struct('edge_color', 'y', 'rect_mode', 'keep', 'line_width', 1, ...
+    'images', images, 'res_dir', './res2', 'rect_tag', 'mytag', 'resize_times', 1, ...
     'resize_method', 'bicubic');
 
 gui_figure(config, images_list);
