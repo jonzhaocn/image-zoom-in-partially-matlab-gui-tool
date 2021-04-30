@@ -1,4 +1,4 @@
-function move_rect(row, col, handles, config)
+function move_rect(row, col, main_handle, config)
 % 移动矩形
 
     global info;
@@ -29,7 +29,7 @@ function move_rect(row, col, handles, config)
     
     info.rect_position(1) = info.rect_position(1) + col_move;
     info.rect_position(2) = info.rect_position(2) + row_move;
-    rectangle(handles.rectplot_handle, 'position', info.rect_position, 'edgecolor', ...
+    rectangle(main_handle.plot, 'position', info.rect_position, 'edgecolor', ...
         config.edgecolor, 'tag', config.rect_tag, 'linewidth', config.line_width);
-    refreshdata(handles.mainfig_handle);
+    refreshdata(main_handle.fig);
 end

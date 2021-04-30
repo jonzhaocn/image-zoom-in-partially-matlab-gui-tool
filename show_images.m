@@ -1,4 +1,4 @@
-function show_images(res_handles, config)
+function show_images(res_handle, config)
     % show images in the second figure
     global info;
     col = info.rect_position(1);
@@ -11,9 +11,9 @@ function show_images(res_handles, config)
         round(col):round(col+num_col-1), :, i);
     
         if numel(curr_img) > 0
-            res_handles{i}.img.CData = curr_img;
-            res_handles{i}.plot.XLim = [0.5, 0.5+size(curr_img, 2)];
-            res_handles{i}.plot.YLim = [0.5, 0.5+size(curr_img, 1)];
+            res_handle{i}.img.CData = curr_img;
+            res_handle{i}.plot.XLim = [0.5, 0.5+size(curr_img, 2)];
+            res_handle{i}.plot.YLim = [0.5, 0.5+size(curr_img, 1)];
         else
             break;
         end

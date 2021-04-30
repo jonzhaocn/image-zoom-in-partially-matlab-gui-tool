@@ -1,4 +1,4 @@
-function update_rect(row, col, handle_struct, config)
+function update_rect(row, col, main_handle, config)
     % update zoom in area size
     global info; 
     % 由于鼠标的点击位置是不固定的，所以根据鼠标点击位置与松开位置的坐标大小，确定矩形的起点
@@ -42,7 +42,7 @@ function update_rect(row, col, handle_struct, config)
     % 删除原先绘制的矩形
     delete(findobj(gca, 'tag', config.rect_tag));
     % 绘制新的矩形
-    rectangle(handle_struct.rectplot_handle, 'position', info.rect_position, 'edgecolor', ...
+    rectangle(main_handle.plot, 'position', info.rect_position, 'edgecolor', ...
         config.edgecolor, 'tag', config.rect_tag, 'linewidth', config.line_width);
-    refreshdata(handle_struct.mainfig_handle);
+    refreshdata(main_handle.fig);
 end
