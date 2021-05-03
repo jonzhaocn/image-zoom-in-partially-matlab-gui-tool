@@ -32,10 +32,10 @@ function update_rect(row, col, main_handle, config)
             num_row = num_col * img_row/img_col;
         end
         
-    elseif strcmp(config.rect_mode, 'rectangular')
+    elseif strcmp(config.rect_mode, 'rectangle')
         
     else
-        error('rect_mode shoule be square or rectangular')
+        error('rect_mode shoule be square or rectangle')
     end
     
     info.rect_position = [start_col, start_row, num_col, num_row];
